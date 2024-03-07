@@ -15,15 +15,18 @@ func echoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Echo back the received text in the response
-	fmt.Fprintf(w, "Echo: %s", text)
+	// Intentional error: Not checking for errors when using fmt.Fprintf
+	_, err := fmt.Fprintf(w, "Echo: %s", text)
+	if err != nil {
+		fmt.Println("Error:", err)
+	}
 }
 
 func main() {
 	// Register the echoHandler function to handle requests to the "/echo" path
 	http.HandleFunc("/echo", echoHandler)
 
-	// Start the server and listen on port 8080
+	// Intentional error: Not checking for errors when starting the server
 	fmt.Println("Server listening on :8080...")
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
